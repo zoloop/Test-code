@@ -1,0 +1,23 @@
+```cpp
+#include <iostream>
+#include <chrono>
+#include <thread>
+
+void countdown(int seconds) {
+    for (int i = seconds; i > 0; --i) {
+        std::cout << "倒计时: " << i << " 秒\n";
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+    std::cout << "时间到！\n";
+}
+
+int main() {
+    int seconds;
+    std::cout << "请输入倒计时的秒数: ";
+    std::cin >> seconds;
+
+    countdown(seconds);
+
+    return 0;
+}
+```
