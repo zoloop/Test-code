@@ -1,0 +1,23 @@
+public class TimeConversion {  
+    public static void main(String[] args) {  
+        // 转换秒为小时  
+        int seconds = 3600;  
+        int hours = convertSecondsToHours(seconds);  
+        System.out.println(seconds + " 秒等于 " + hours + " 小时");  
+  
+        // 转换小时为秒  
+        int hours2 = 1;  
+        int seconds2 = convertHoursToSeconds(hours2);  
+        System.out.println(hours2 + " 小时等于 " + seconds2 + " 秒");  
+    }  
+  
+    // 将秒转换为小时  
+    public static int convertSecondsToHours(int seconds) {  
+        return seconds / 3600;  
+    }  
+  
+    // 将小时转换为秒  
+    public static int convertHoursToSeconds(int hours) {  
+        return hours * 3600;  
+    }  
+}
