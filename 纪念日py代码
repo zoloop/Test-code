@@ -1,0 +1,78 @@
+import tkinter
+import datetime
+import pandas as pd
+
+# 判断闰年和平年来确定天数
+def runn(x):
+    if x % 400 == 0:
+        return 366
+    elif x % 4 == 0 and x % 100 != 0:
+        return 366
+    else:
+        return 365
+
+days = runn(int(datetime.datetime.now().strftime('%Y')))
+
+# 计算时间差（天数）
+def calculate(a):
+    b = pd.to_datetime(a)
+    if runn(b.year) == 366 and b.month == 2 and b.day == 29:
+        dd = 1461
+    else:
+        dd = days
+    if b.year < datetime.datetime.now().year:
+        years = datetime.datetime.now().year - b.year
+        b = b.replace(year=b.year + years)
+    today = pd.to_datetime(datetime.datetime.now().strftime('%Y-%m-%d'))
+    if (b - today) / pd.Timedelta(1, 'D') >= 0:
+        dif = (b - today) / pd.Timedelta(1, 'D')
+    else:
+        dif = (b - today) / pd.Timedelta(1, 'D') + dd
+    return dif
+
+def gui_cre():
+    # 创建主窗口
+    root = tkinter.Tk()
+    root.geometry("500x100")
+    root.title("纪念日计算器")
+
+    # 设置输入标签组件
+    labelName1 = tkinter.Label(root, text='纪念日日期: ', justify=tkinter.RIGHT, width=50)
+    labelName1.place(x=10, y=10, width=80, height=20)
+
+    # 设置输出标签组件
+    labelName1_o = tkinter.Label(root, text='纪念日倒计时 (天): ', justify=tkinter.RIGHT, width=50)
+    labelName1_o.place(x=250, y=10, width=100, height=20)
+
+    # 创建输入文本框组件
+    varName1 = tkinter.StringVar(root, value='')
+    entryName1 = tkinter.Entry(root, width=80, textvariable=varName1)
+    entryName1.place(x=100, y=10, width=80, height=20)
+
+    # 创建输出文本框组件
+    anni1 = tkinter.StringVar(root, value='')
+    Name1 = tkinter.Entry(root, width=80, textvariable=anni1)
+    Name1.place(x=350, y=10, width=80, height=20)
+
+    # 创建计算按钮组件
+    def cal():
+        raw1 = varName1.get()
+        ay = calculate(raw1)
+        anni1.set(int(ay))
+
+    b1 = tkinter.Button(root, text='计 算', command=cal)
+    b1.place(x=100, y=60, width=50, height=20)
+
+    # 创建清除按钮组件
+    def cancel():
+        varName1.set('')
+        anni1.set('')
+
+    b2 = tkinter.Button(root, text='清 除', command=cancel)
+    b2.place(x=300, y=60, width=50, height=20)
+
+    # 启动循环检测
+    root.mainloop()
+
+if __name__ == '__main__':
+    gui_cre()
